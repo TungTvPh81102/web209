@@ -1,64 +1,46 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-const ProductForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState();
-  const [data, setData] = useState({});
-  const [products, setProducts] = useState([]);
+// eslint-disable-next-line react/prop-types
+const ProductEdit = () => {
+  const nav = useNavigate();
+  const { id } = useParams();
+  const [dataEdit, setData] = useState({});
+
+  const { data } = useQuery({
+    queryKey: ["products", id],
+    queryFn: async () => {
+      return await api.get(`/products/${id}`);
+    },
+  });
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.get("/products");
-        setProducts(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        setIsLoading(true);
-      }
-    })();
-  }, []);
+    if (data) {
+      setData(data?.data);
+    }
+  }, [data]);
+
+  const { mutate } = useMutation({
+    mutationFn: async (product) => {
+      return await api.put(`/products/${id}`, product);
+    },
+    onSuccess: () => {
+      // queryClient.invalidateQueries({ queryKey: ["products"] });
+      nav("/");
+    },
+  });
 
   const handleOnChange = (e) => {
     e.preventDefault();
     const { name, value, type, checked } = e.target;
-    setData({ ...data, [name]: type === "checkbox" ? checked : value });
+    setData({ ...dataEdit, [name]: type === "checkbox" ? checked : value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      if (isEdit) {
-        const res = await api.put(`/products/${isEdit.id}`, data);
-        const newProducts = products.map((item) => {
-          if (item.id === isEdit.id) {
-            return res.data;
-          } else {
-            return item;
-          }
-        });
-
-        setProducts(newProducts);
-        setIsEdit(undefined);
-
-        alert("Cập nhật thành công");
-      } else {
-        const res = await api.post("/products", data);
-        setProducts([...products, res.data]);
-        alert("Thêm thành công");
-      }
-      setData({});
-      e.target.reset();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleEdit = (id) => {
-    const productEdit = products.find((item) => item.id === id);
-    setIsEdit(productEdit);
+    mutate(dataEdit);
   };
 
   return (
@@ -70,7 +52,7 @@ const ProductForm = () => {
             type="text"
             id="name"
             name="name"
-            defaultValue={isEdit?.name}
+            value={dataEdit?.name || ""}
             onChange={handleOnChange}
             className="form-control"
             placeholder="Tên sản phẩm"
@@ -81,7 +63,7 @@ const ProductForm = () => {
           <input
             type="text"
             id="price"
-            defaultValue={isEdit?.price}
+            value={dataEdit?.price || ""}
             name="price"
             onChange={handleOnChange}
             className="form-control"
@@ -93,7 +75,7 @@ const ProductForm = () => {
           <input
             type="text"
             id="imageUrl"
-            defaultValue={isEdit?.imageUrl}
+            value={dataEdit?.imageUrl  || ""}
             onChange={handleOnChange}
             name="imageUrl"
             className="form-control"
@@ -105,6 +87,7 @@ const ProductForm = () => {
           <select
             name="category"
             onChange={handleOnChange}
+            value={dataEdit.category || ""}
             className="form-control"
           >
             <option value="Danh mục 1">Danh mục 1</option>
@@ -119,7 +102,7 @@ const ProductForm = () => {
             onChange={handleOnChange}
             placeholder="Mô tả"
             id="description"
-            defaultValue={isEdit?.description}
+            value={dataEdit?.description || ""}
             className="form-control"
           ></textarea>
         </div>
@@ -129,13 +112,13 @@ const ProductForm = () => {
             type="checkbox"
             name="available"
             onChange={handleOnChange}
-            defaultChecked={isEdit?.available}
+            checked={dataEdit?.available || ""}
             className="form-check"
           />
         </div>
         <div className="form-group mb-3">
           <button type="submit" className="btn btn-primary">
-            {isEdit ? "Cập nhật" : "Thêm"}
+            {dataEdit ? "Cập nhật" : "Thêm"}
           </button>
         </div>
       </form>
@@ -143,4 +126,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default ProductEdit;
