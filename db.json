@@ -26,15 +26,6 @@
       "description": "Mô tả ngắn 3",
       "available": true,
       "id": 3
-    },
-    {
-      "name": "Sản phẩm 4 update",
-      "imageUrl": "https://th.bing.com/th/id/R.2436bfd57f8da9d3352be6d9c69f7d0d?rik=9ZCsDkOmNhWhyQ&riu=http%3a%2f%2fwallpaperheart.com%2fwp-content%2fuploads%2f2018%2f04%2fbest-scenery-wallpaper-scenery-images.jpg&ehk=QhEgBXlBIdu4NBBKeTvxOQncAMHrLokkC8ustgaeB9c%3d&risl=&pid=ImgRaw&r=0",
-      "price": "123",
-      "category": "Danh mục 1",
-      "description": "Mô tả ngắn",
-      "available": true,
-      "id": 4
     }
   ]
 }

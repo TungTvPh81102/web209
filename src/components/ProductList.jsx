@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { IProduct } from "./../interface/index";
+import { useEffect, useState } from "react";
 import { api } from "../api/axios";
 
 const ProductList = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState<IProduct>();
+  const [isEdit, setIsEdit] = useState();
   const [data, setData] = useState({});
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -21,7 +20,7 @@ const ProductList = () => {
     })();
   }, []);
 
-  const handleRemove = async (id: number | string) => {
+  const handleRemove = async (id) => {
     try {
       if (confirm("Bạn có muốn xoá sản phẩm ?")) {
         await api.delete(`/products/${id}`);
@@ -69,7 +68,7 @@ const ProductList = () => {
     }
   };
 
-  const handleEdit = (id: number | string) => {
+  const handleEdit = (id) => {
     const productEdit = products.find((item) => item.id === id);
     setIsEdit(productEdit);
   };
