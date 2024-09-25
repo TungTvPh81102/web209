@@ -1,22 +1,104 @@
 {
   "products": [
     {
-      "name": "Zeus Harrison",
-      "price": "817",
-      "imageUrl": "data:image/webp;base64,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",
-      "description": "Consequuntur laboris",
-      "available": false,
-      "id": 1,
-      "category": "Danh mục 1"
+      "name": "Sản phẩm 1",
+      "price": 1231,
+      "available": true,
+      "type": "1",
+      "category": "1",
+      "description": "123",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727253808/qcmbubau0oplgu83uzth.webp",
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "Price Frederick",
-      "price": "922",
-      "imageUrl": "data:image/webp;base64,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",
-      "available": false,
-      "description": "Harum corrupti maio",
-      "category": "Danh mục 2"
+      "name": "Sản phẩm 2",
+      "price": 123,
+      "available": true,
+      "type": "1",
+      "category": "2",
+      "description": "Mô tả 2",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727253924/ewmkb4fx8otbdpoqqvu3.webp",
+      "id": 2
+    },
+    {
+      "name": "Rahim Quinn",
+      "price": 103,
+      "available": true,
+      "type": "2",
+      "category": "2",
+      "description": "Sit veniam laborum ",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727253976/nqripdrq7feszxod3ffl.webp",
+      "id": 3
+    },
+    {
+      "name": "Paki Fulton",
+      "price": 122,
+      "available": true,
+      "type": "1",
+      "category": "2",
+      "description": "Cupiditate mollit vo",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727253988/k2pgmncbj7pkaqbxdge1.webp",
+      "id": 4
+    },
+    {
+      "name": "Oliver Walker",
+      "price": 439,
+      "available": true,
+      "type": "1",
+      "category": "2",
+      "description": "Aut qui in laudantiu",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727254015/cvq3xctecfm7whrjqc7u.webp",
+      "id": 5
+    },
+    {
+      "name": "Kellie Odom",
+      "price": 700,
+      "available": true,
+      "type": "1",
+      "category": "2",
+      "description": "Ex cupidatat natus a",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727254026/lg75duqn9a7pwxw70t2y.webp",
+      "id": 6
+    },
+    {
+      "name": "Winter Anderson",
+      "price": 765,
+      "available": true,
+      "type": "1",
+      "category": "2",
+      "description": "Consequatur est sit",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727254062/exkk5cm0injzudazhmaz.webp",
+      "id": 7
+    },
+    {
+      "name": "Kyla Ross",
+      "price": 570,
+      "available": true,
+      "type": "1",
+      "category": "2",
+      "description": "Laboriosaưqm culpa au",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727254123/h7rprfzhbotpz1rwraw1.webp",
+      "id": 8
+    },
+    {
+      "name": "Isadora Mayo",
+      "price": 409,
+      "available": true,
+      "type": "1",
+      "category": "2",
+      "description": "Voluptas rerum occae",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727254199/miyadrvvfe1ir9tgyiia.webp",
+      "id": 9
+    },
+    {
+      "name": "Raphael Burnett",
+      "price": 376,
+      "available": true,
+      "type": "2",
+      "category": "2",
+      "description": "Magna eligendi quis ",
+      "imageUrl": "https://res.cloudinary.com/dvrexlsgx/image/upload/v1727254526/y1mjatnw6azc3bzioond.webp",
+      "id": 10
     }
   ]
 }
