@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { api } from "./../../../api/axios";
 import { Link } from "react-router-dom";
-import { message } from "antd";
+import { message, Popconfirm } from "antd";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -38,12 +38,6 @@ const ProductList = () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
   });
-
-  const handleRemove = async (id) => {
-    if (confirm("Bạn có chắc muốn xoá sản phẩm?")) {
-      mutate(id);
-    }
-  };
 
   if (isLoading) return <h3>Loading...</h3>;
   if (isError) return <h3>{error.message}</h3>;
@@ -86,13 +80,16 @@ const ProductList = () => {
                   Chi tiết
                 </Link>
                 <button className="btn btn-warning ms-2">Sửa</button>
-                
-                <button
-                  onClick={() => handleRemove(item.id)}
-                  className="btn btn-danger ms-2"
+
+                <Popconfirm
+                  title="Delete the task"
+                  description="Are you sure to delete this task?"
+                  onConfirm={() => mutate(item.id)}
+                  okText="Yes"
+                  cancelText="No"
                 >
-                  Xoá
-                </button>
+                  <button className="btn btn-danger ms-2">Xoá</button>
+                </Popconfirm>
               </td>
             </tr>
           ))}
