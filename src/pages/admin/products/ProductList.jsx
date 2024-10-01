@@ -47,7 +47,7 @@ const ProductList = () => {
       {contextHolder}
       <div className="d-flex justify-content-between">
         <h3>Danh sách sản phẩm</h3>
-        <Link className="btn btn-primary">Thêm mới</Link>
+        <Link to="/admin/product-add" className="btn btn-primary">Thêm mới</Link>
       </div>
       <table className="table table-bordered mt-4">
         <thead>
