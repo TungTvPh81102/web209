@@ -3,8 +3,14 @@ import { useState } from "react";
 import { api } from "./../../../api/axios";
 import { Link } from "react-router-dom";
 import { message, Popconfirm } from "antd";
-
+import { Button, Form, Input, Radio } from "antd";
 const ProductList = () => {
+  const [form] = Form.useForm();
+  const [formLayout, setFormLayout] = useState("horizontal");
+  const onFormLayoutChange = ({ layout }) => {
+    setFormLayout(layout);
+  };
+
   const [products, setProducts] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -44,10 +50,40 @@ const ProductList = () => {
 
   return (
     <div>
+      <Form
+        layout={formLayout}
+        form={form}
+        initialValues={{
+          layout: formLayout,
+        }}
+        onValuesChange={onFormLayoutChange}
+        style={{
+          maxWidth: formLayout === "inline" ? "none" : 600,
+        }}
+      >
+        <Form.Item label="Form Layout" name="layout">
+          <Radio.Group value={formLayout}>
+            <Radio.Button value="horizontal">Horizontal</Radio.Button>
+            <Radio.Button value="vertical">Vertical</Radio.Button>
+            <Radio.Button value="inline">Inline</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label="Field A">
+          <Input placeholder="input placeholder" />
+        </Form.Item>
+        <Form.Item label="Field B">
+          <Input placeholder="input placeholder" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary">Submit</Button>
+        </Form.Item>
+      </Form>
       {contextHolder}
       <div className="d-flex justify-content-between">
         <h3>Danh sách sản phẩm</h3>
-        <Link to="/admin/product-add" className="btn btn-primary">Thêm mới</Link>
+        <Link to="/admin/product-add" className="btn btn-primary">
+          Thêm mới
+        </Link>
       </div>
       <table className="table table-bordered mt-4">
         <thead>
@@ -79,8 +115,12 @@ const ProductList = () => {
                 >
                   Chi tiết
                 </Link>
-                <button className="btn btn-warning ms-2">Sửa</button>
-
+                <Link
+                  to={`/admin/product-edit/${item.id}`}
+                  className="btn btn-warning ms-2"
+                >
+                  Sửa
+                </Link>
                 <Popconfirm
                   title="Delete the task"
                   description="Are you sure to delete this task?"

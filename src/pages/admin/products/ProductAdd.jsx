@@ -1,19 +1,54 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { api } from "../../../api/axios";
+import { message } from "antd";
 
-const ProductForm = () => {
-  const [checkBox, setCheckBox] = useState(false);
-  const handleSubmit = (e) => {
+const ProductAdd = () => {
+  const nav = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [data, setData] = useState({});
+
+  const { mutate } = useMutation({
+    mutationFn: async (product) => {
+      const { data } = await api.post("/products", product);
+      return data;
+    },
+    onSuccess: () => {
+      messageApi.open({
+        type: "success",
+        content: "Thêm sản phẩm thành công",
+      });
+
+      setTimeout(() => {
+        nav("/admin/products");
+      }, 2000);
+    },
+    onError: (err) => {
+      messageApi.open({
+        type: "error",
+        content: "Có lỗi xảy ra, vui lòng thử lại " + err,
+      });
+    },
+  });
+
+  const handleOnChange = (e) => {
     e.preventDefault();
 
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
-    console.log(value);
-    console.log(name);
+    setData({ ...data, [name]: type === "checkbox" ? checked : value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mutate(data);
   };
 
   return (
     <div>
       <h1>Thêm mới sản phẩm</h1>
+      {contextHolder}
       <form onSubmit={handleSubmit}>
         <div className="form-group mb-3">
           <label htmlFor="">Tên sản phẩm</label>
@@ -23,6 +58,7 @@ const ProductForm = () => {
             name="name"
             className="form-control"
             placeholder="Tên sản phẩm"
+            onInput={handleOnChange}
           />
         </div>
         <div className="form-group mb-3">
@@ -33,6 +69,7 @@ const ProductForm = () => {
             name="price"
             className="form-control"
             placeholder="Giá"
+            onInput={handleOnChange}
           />
         </div>
         <div className="form-group mb-3">
@@ -43,21 +80,26 @@ const ProductForm = () => {
             name="imageUrl"
             className="form-control"
             placeholder="Ảnh"
+            onInput={handleOnChange}
           />
         </div>
         <div className="form-group mb-3">
           <label htmlFor="">Danh mục</label>
-          <input
-            type="text"
-            id="category"
+          <select
+            onInput={handleOnChange}
             name="category"
             className="form-control"
-            placeholder="Danh mục"
-          />
+            id=""
+          >
+            <option value="">Chọn</option>
+            <option value="Danh mục 1">Danh mục 1</option>
+            <option value="Danh mục 2">Danh mục 2</option>
+          </select>
         </div>
         <div className="form-group mb-3">
           <label htmlFor="">Mô tả</label>
           <textarea
+            onInput={handleOnChange}
             name="description"
             placeholder="Mô tả"
             id="description"
@@ -70,7 +112,7 @@ const ProductForm = () => {
             type="checkbox"
             name="available"
             value="true"
-            onChange={(e) => setCheckBox(e.target.checked)}
+            onInput={handleOnChange}
             className="form-check ms-2"
           />
         </div>
@@ -82,4 +124,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default ProductAdd;
