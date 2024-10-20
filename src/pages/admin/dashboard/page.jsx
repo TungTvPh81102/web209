@@ -10,6 +10,7 @@ import {
 } from "antd";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../../api/axios";
+import { Link } from "react-router-dom";
 
 const DashboardPage = () => {
   const queryClient = useQueryClient();
@@ -66,9 +67,11 @@ const DashboardPage = () => {
       render: (_, record) => (
         <Space size="middle">
           <>
-            <Button color="primary" variant="dashed">
-              Edit
-            </Button>
+            <Link to={`/admin/product-edit/${record.id}`}>
+              <Button color="primary" variant="dashed">
+                Edit
+              </Button>
+            </Link>
 
             <Popconfirm
               title="Delete the task"
@@ -77,7 +80,7 @@ const DashboardPage = () => {
               onConfirm={() => mutate(record.id)}
               cancelText="No"
             >
-              <Button color="danger" variant="dashed">
+              <Button color="danger" type="primary" variant="solid">
                 Delete
               </Button>
             </Popconfirm>
@@ -109,7 +112,7 @@ const DashboardPage = () => {
         type: "success",
         content: "Xoá sản phẩm thành công",
       });
-      queryClient.invalidateQueries({ queryKey: ["products"] }); // Làm mới danh sách sản phẩm sau khi xóa
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: () => {
       messageApi.open({
@@ -122,11 +125,13 @@ const DashboardPage = () => {
   return (
     <>
       {contextHolder}
-      <div className="flex">
+      <div className="flex justify-between">
         <h3 className="font-bold text-xl">Danh sách sản phẩm</h3>
-        <Button type="primary" className="ml-auto">
-          Thêm mới
-        </Button>
+        <Link to="/admin/product-add">
+          <Button type="primary" className="ml-auto">
+            Thêm mới
+          </Button>
+        </Link>
       </div>
       <Skeleton active loading={isLoading}>
         <Table columns={columns} className="mt-4" dataSource={data} />
